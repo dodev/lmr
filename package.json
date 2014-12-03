@@ -1,15 +1,20 @@
 {
-  "name": "lmr",
-  "version": "0.0.0",
-  "description": "Local Module Require (yet another one of those, but better)",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "require",
-    "local"
-  ],
-  "author": "Petar Dodev",
-  "license": "ISC"
+    "name": "lmr",
+    "version": "0.0.0",
+    "description": "Local Module Require (yet another one of those, but better)",
+    "main": "index.js",
+    "scripts": {
+        "lint": "jshint index.js; jscs index.js; exit 0",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "require",
+        "local"
+    ],
+    "author": "Petar Dodev",
+    "license": "MIT",
+    "devDependencies": {
+        "jscs": "^1.8",
+        "jshint": "^2.5"
+    }
 }

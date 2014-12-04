@@ -2,10 +2,14 @@
     "name": "lmr",
     "version": "0.0.0",
     "description": "Local Module Require (yet another one of those, but better)",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dodev/lmr.git"
+    },
     "main": "index.js",
     "scripts": {
-        "lint": "jshint index.js; jscs index.js; exit 0",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "lint": "jscs .; jshint-groups;exit 0",
+        "test": "mocha test/index.js && exit 0"
     },
     "keywords": [
         "require",
@@ -15,6 +19,8 @@
     "license": "MIT",
     "devDependencies": {
         "jscs": "^1.8",
-        "jshint": "^2.5"
+        "jshint-groups": "^0.6",
+        "mocha": "^2.0",
+        "should": "^4.3"
     }
 }

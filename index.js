@@ -5,11 +5,26 @@ var path = require('path');
 
 var CONFIG_FILE_NAME = '.lmr.js';
 var pwd = process.env.PWD;
-var root = pwd;
 var defaultConfig = {
     root: pwd,
     aliases: []
 };
+
+/**
+ * Describes a directory alias to be used in the require section
+ *
+ * @typedef {Object} AliasEntry
+ * @property {String} value
+ * @property {String} path
+ */
+
+/**
+ * Structure of the config object
+ *
+ * @typedef {Object} Config
+ * @property {String} root
+ * @property {AliasEntry[]} aliases
+ */
 
 // 1.look for config
 function getConfigFilePath(startDirName) {
@@ -23,17 +38,19 @@ function getConfigFilePath(startDirName) {
     }
 }
 
-
 function parseConfigFile(filePath) {
+    var configDirectory = path.dirname(filePath);
     var rawConfig = require(filePath);
     var result = {};
-// 2.determine root
+
+    // Select lmr root directory. If this property is not present in the config, use the directory of the config file
     result.root = rawConfig.root ?
-        rawConfig.root : // TODO: resolve the path to absolute
-        pwd;
-// 3.build aliases
+        path.resolve(configDirectory, rawConfig.root) :
+        configDirectory;
+
+    // Resolve the path of the aliases depending, relative to the root directory
     result.aliases = rawConfig.aliases ?
-        rawConfig.aliases : // TODO: concatenate root and aliases path
+        path.resolve(result.root, rawConfig.aliases) :
         [];
 
     return result;
@@ -45,21 +62,17 @@ var config = configFilePath ?
     defaultConfig;
 
 function lmr(modulePath) {
-    // check for aliases
-    var aliasMatches = config.aliases.filter(function (alias) {
-        return modulePath.indexOf(alias.alias) === 0;
-    });
+    // check for alias matches
+    var aliasMatch = config.aliases.filter(function (alias) {
+        return modulePath.indexOf(alias.value) === 0;
+    })[0];
 
-    var moduleDirectoryPath = aliasMatches.length > 0 ?
-        aliasMatches[0].path : // TODO: remove the alias from the modulePath
-        config.root;
+    // if a match was found, use it's path instead of the root
+    var fullModulePath = aliasMatch ?
+        path.resolve(aliasMatch.path, modulePath.substr(aliasMatch.value.length)) :
+        path.resolve(config.root, modulePath);
 
-    // resolve module path
-    // look for module in aliases
-    //    if present return the required module
-    //    if not present require from the fs
-
-    return require(path.join(moduleDirectoryPath, modulePath));
+    return require(fullModulePath);
 }
 
 module.exports = lmr;

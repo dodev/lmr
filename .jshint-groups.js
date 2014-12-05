@@ -38,7 +38,7 @@ module.exports = {
                 expr: true // for should asserts
             },
             includes: [
-                'test/*.js'
+                'test/**/*.test.js'
             ]
         }
     }

@@ -9,7 +9,7 @@
     "main": "index.js",
     "scripts": {
         "lint": "jscs .; jshint-groups; exit 0",
-        "test": "cd test; mocha index.js && exit 0"
+        "test": "cd test; mocha index.test.js; exit 0"
     },
     "keywords": [
         "module",

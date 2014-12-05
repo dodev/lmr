@@ -26,12 +26,12 @@ var defaultConfig = {
  * @property {AliasEntry[]} aliases
  */
 
-// 1.look for config
 function getConfigFilePath(startDirName) {
     var dirNames = startDirName.split(path.sep);
-    for (var i = dirNames.length - 1; i >= 0; i--) {
-        var currDirName = startDirName.split(dirNames[i])[0];
+    for (var i = dirNames.length; i >= 0; i--) {
+        var currDirName = dirNames[i] ? startDirName.split(dirNames[i])[0] : startDirName;
         var configFilePath = path.join(currDirName, CONFIG_FILE_NAME);
+
         if (fs.existsSync(configFilePath)) {
             return configFilePath;
         }
@@ -50,7 +50,12 @@ function parseConfigFile(filePath) {
 
     // Resolve the path of the aliases depending, relative to the root directory
     result.aliases = rawConfig.aliases ?
-        path.resolve(result.root, rawConfig.aliases) :
+        rawConfig.aliases.map(function (rawAlias) {
+            return {
+                value: path.normalize(rawAlias.value + path.sep),
+                path: path.resolve(result.root, rawAlias.path)
+            };
+        }) :
         [];
 
     return result;
@@ -62,6 +67,10 @@ var config = configFilePath ?
     defaultConfig;
 
 function lmr(modulePath) {
+    if (!modulePath || typeof modulePath !== 'string') {
+        throw new Error('The argument of lmr should be a string');
+    }
+
     // check for alias matches
     var aliasMatch = config.aliases.filter(function (alias) {
         return modulePath.indexOf(alias.value) === 0;

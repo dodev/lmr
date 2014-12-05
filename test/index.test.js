@@ -7,5 +7,7 @@ describe('lmr', function () {
         baz.value.should.equal('baz');
         var bar = lmr('foo/bar');
         bar.value.should.equal('real-bar');
+        var fubar = lmr('fu/bar');
+        fubar.value.should.equal('fubar');
     });
 });

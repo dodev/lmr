@@ -26,6 +26,12 @@ var defaultConfig = {
  * @property {AliasEntry[]} aliases
  */
 
+/**
+ * Looks for a config file in the fs. It starts from the startDirName and makes it's way up to the root folder.
+ *
+ * @param {String} startDirName The folder from which to begin the search
+ * @returns {String|undefined} Absolute path to the config file, or undefined if no file was found.
+ */
 function getConfigFilePath(startDirName) {
     var dirNames = startDirName.split(path.sep);
     for (var i = dirNames.length; i >= 0; i--) {
@@ -38,6 +44,12 @@ function getConfigFilePath(startDirName) {
     }
 }
 
+/**
+ * Reads the config file and builds a Config object.
+ *
+ * @param {String} filePath Path to the config file.
+ * @returns {Config}
+ */
 function parseConfigFile(filePath) {
     var configDirectory = path.dirname(filePath);
     var rawConfig = require(filePath);
@@ -62,10 +74,22 @@ function parseConfigFile(filePath) {
 }
 
 var configFilePath = getConfigFilePath(pwd);
+
+/**
+ * Module's configuration. Built on the first run.
+ *
+ * @type {Config}
+ */
 var config = configFilePath ?
     parseConfigFile(configFilePath) :
     defaultConfig;
 
+/**
+ * Local module require
+ *
+ * @param {String} modulePath Relative path from the root/ or relative path from an alias.
+ * @returns {*} Whatever the module exports
+ */
 function lmr(modulePath) {
     if (!modulePath || typeof modulePath !== 'string') {
         throw new Error('The argument of lmr should be a string');

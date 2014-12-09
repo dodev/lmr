@@ -28,7 +28,10 @@ npm i lrm
 And use it out of the box:
 ```javascript
 var lmr = require('lmr');
-var overridenRequest = lmr('app/overrides/request');
+var HashMap = lmr('app/lib/HashMap');
+
+var cache = new HashMap();
+...
 ```
 
 A Real World Example
@@ -67,10 +70,6 @@ module.exports = {
         {
             value: 'config',
             path: '../config/current/'
-        },
-        {
-            value: 'build',
-            path: '../build/'
         }
     ]
 };
@@ -88,8 +87,8 @@ var hostsConfig = lmr('confg/hosts');
 
 TODO
 ===
-* Under the hood - how the root folder is selected, configuration file syntax.
-* how to contribute, codestyle, running lint and tests.
+* README: Describe what's happening under the hood - how the root folder is selected, configuration file syntax.
+* README: how to contribute, codestyle, running lint and tests.
 * Path - module cache.
 * More tests.
 * Continuous integration.

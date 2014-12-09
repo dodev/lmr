@@ -18,7 +18,8 @@ What LMR has to offer, besides requiring relatively to the root of the project, 
 Quick Start
 ===
 
-The simplest use case is just using LMR as a tool to require relative to your project root:
+The simplest use case is just using LMR as a tool to require relative to your project root.
+
 Install it:
 ```
 npm i lrm
@@ -32,7 +33,7 @@ var overridenRequest = lmr('app/overrides/request');
 
 A Real World Example
 ===
-LMR solves more complicated tasks. Consider a project with the following file structure:
+Actually LMR is designed to solve more complicated tasks than the quick start example. Consider a project with the following file structure:
 ```
 /
   |-build/        // build targets
@@ -52,13 +53,13 @@ LMR solves more complicated tasks. Consider a project with the following file st
   | |-util/       // simple project-specific utilities
   |
   |-test/         // a centralized tests' forlder
-  | |-client/
-  | |-server/
+    |-client/
+    |-server/
 
 ```
-The most obvious shortcoming from requiring relatively to the project's root is that for all server modules, the path will begin with 'server/'. Also it would be helpful to refer only to the current configs only, i.e. only using the config files referred by the `config/current` symlink. Also you may want to access your `server/` modules from the `test/server/` like their were placed in a single directory.
+The most obvious shortcoming from requiring relatively to the project's root is that for all server modules, the path will begin with `'server/'`. Also it would be helpful to refer explicitly to the current configs. Another helpful abstraction would be if you could access your `server/` modules from the `test/server/` like their were placed under one directory.
 
-Luckily for you LMR has the solution to your needs - a configuration file. The above problems are solved with the following configuration file, named `.lmr.js` and  placed in the root of the project:
+LMR gives the developer the ability to describe his virtual module structure declaratively. The above problems are solved with the following configuration file, named `.lmr.js` and  placed in the root of the project:
 ```javascript
 module.exports = {
     root: 'server/',
@@ -75,7 +76,7 @@ module.exports = {
 };
 ```
 
-So now if you want to refer to `/server/lib/Analyzer` from any point in your project you can do it consistently:
+So now if you want to refer to `/server/lib/Analyzer` from any point in your project you can do it consistently throught out your modules:
 ```javascript
 var Analyzer = lmr('lib/Analyzer');
 ```
@@ -87,7 +88,8 @@ var hostsConfig = lmr('confg/hosts');
 
 TODO
 ===
-* Extend this doc.
+* Under the hood - how the root folder is selected, configuration file syntax.
+* how to contribute, codestyle, running lint and tests.
 * Path - module cache.
 * More tests.
 * Continuous integration.

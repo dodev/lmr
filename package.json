@@ -1,6 +1,6 @@
 {
     "name": "lmr",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "Local Module Require (yet another one of those, but better)",
     "repository": {
         "type": "git",

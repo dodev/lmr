@@ -68,10 +68,10 @@ function parseConfigFile(filePath) {
 
     // Resolve the path of the aliases depending, relative to the root directory
     result.aliases = rawConfig.aliases ?
-        rawConfig.aliases.map(function (rawAlias) {
+        Object.keys(rawConfig.aliases).map(function (aliasName) {
             return {
-                value: path.normalize(rawAlias.value + path.sep),
-                path: path.resolve(result.root, rawAlias.path)
+                value: path.normalize(aliasName + path.sep),
+                path: path.resolve(result.root, rawConfig.aliases[aliasName])
             };
         }) :
         [];

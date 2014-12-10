@@ -1,9 +1,6 @@
 {
     "root": "../",
-    "aliases": [
-        {
-            "value": "fu/",
-            "path": "fuh/"
-        }
-    ]
+    "aliases": {
+        "fu": "fuh"
+    }
 }

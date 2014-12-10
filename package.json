@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "jscs .; jshint-groups; exit 0",
-    "test": "cd test; mocha . --recursive; exit 0"
+    "test": "cd test; mocha .; cd nested; mocha .; cd ../nested-own-config; mocha .; exit 0"
   },
   "keywords": [
     "module",

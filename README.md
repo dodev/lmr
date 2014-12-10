@@ -78,12 +78,12 @@ Actually LMR is designed to solve more complicated tasks than the quick start ex
 ```
 The most obvious shortcoming from requiring relatively to the project's root is that for all server modules, the path will begin with `'server/'`. Also it would be helpful to refer explicitly to the current configs. Another helpful abstraction would be if you could access your `server/` modules from the `test/server/` like their were placed under one directory.
 
-LMR gives the developer the ability to describe his virtual module structure declaratively. The above problems are solved with the following configuration file, named `.lmr.js` and  placed in the root of the project:
+LMR gives the developer the ability to describe his virtual module structure declaratively. The above problems are solved with the following configuration file, named `.lmr.json` and  placed in the root of the project:
 ```json
 {
-    root: 'server/',
-    aliases: {
-        'config': '../config/current/'
+    "root": "server/",
+    "aliases": {
+        "config": "../config/current/"
     }
 }
 ```

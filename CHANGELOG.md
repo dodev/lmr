@@ -1,3 +1,5 @@
+### 0.0.3
+    * Switched from CommonJS to JSON formated config.
 ### 0.0.2
     * Extended the documentation.
     * Switched to using process.cwd() instead of process.env.PWD.

@@ -3,7 +3,7 @@
 var fs = require('fs');
 var path = require('path');
 
-var CONFIG_FILE_NAME = '.lmr.js';
+var CONFIG_FILE_NAME = '.lmr.json';
 
 var cwd = process.cwd();
 var defaultConfig = {
@@ -58,7 +58,7 @@ function getConfigFilePath(startDirName) {
  */
 function parseConfigFile(filePath) {
     var configDirectory = path.dirname(filePath);
-    var rawConfig = require(filePath);
+    var rawConfig = JSON.parse(fs.readFileSync(filePath));
     var result = {};
 
     // Select lmr root directory. If this property is not present in the config, use the directory of the config file

@@ -4,9 +4,10 @@ var fs = require('fs');
 var path = require('path');
 
 var CONFIG_FILE_NAME = '.lmr.js';
-var pwd = process.env.PWD;
+
+var cwd = process.cwd();
 var defaultConfig = {
-    root: pwd,
+    root: cwd,
     aliases: []
 };
 
@@ -33,14 +34,19 @@ var defaultConfig = {
  * @returns {String|undefined} Absolute path to the config file, or undefined if no file was found.
  */
 function getConfigFilePath(startDirName) {
-    var dirNames = startDirName.split(path.sep);
-    for (var i = dirNames.length; i >= 0; i--) {
-        var currDirName = dirNames[i] ? startDirName.split(dirNames[i])[0] : startDirName;
+    var currDirName = startDirName;
+    var prevDirName = '';
+    // look for config up to the fs root. The FS root resolved to '..' returns the FS root,
+    // hence the condition for the while loop
+    while (currDirName !== prevDirName) {
         var configFilePath = path.join(currDirName, CONFIG_FILE_NAME);
 
         if (fs.existsSync(configFilePath)) {
             return configFilePath;
         }
+
+        prevDirName = currDirName;
+        currDirName = path.resolve(currDirName, '..');
     }
 }
 
@@ -73,7 +79,7 @@ function parseConfigFile(filePath) {
     return result;
 }
 
-var configFilePath = getConfigFilePath(pwd);
+var configFilePath = getConfigFilePath(cwd);
 
 /**
  * Module's configuration. Built on the first run.

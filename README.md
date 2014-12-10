@@ -34,6 +34,22 @@ var cache = new HashMap();
 ...
 ```
 
+How It Works
+===
+The implementation is fairly simple - when required for the first time, lmr determines the root directory of your project and then resolves the aliases relatively to the root.
+
+When the lmr function is called with the name of the required module, it first looks if the name contains an alias. If so, an absolute path to the alias folder is built. If not, the name is resolved relative to the root directory. The resulting path is passed to the native nodejs require, which does all the work for reading, returning what the module has to provide or throwing an error if nothing was found in this path.
+
+Config Syntax
+===
+
+###The Root
+The `root` property, how you've already figured out, specifies the path, relative to which the paths are resolved.
+If it wasn't specified the root of the configuration is considered the directory in which the configuration file placed. If there is no configuration file, then the process current working directory is used as root.
+
+###Aliases
+Aliases provide a mechanism for giving more intuitive names for specific directories. Their path should be relative to the root directory of the lmr configration.
+
 A Real World Example
 ===
 Actually LMR is designed to solve more complicated tasks than the quick start example. Consider a project with the following file structure:
@@ -85,10 +101,22 @@ The current configuration files will be available under the `config` alias:
 var hostsConfig = lmr('confg/hosts');
 ```
 
+How To Contribute
+===
+Recommendations and bug-reports are received warmly @ [github](https://github.com/dodev/lmr/issues).
+
+If you want to get your hands dirty:
+
+1) Fork the [repository](https://github.com/dodev/lmr/fork).
+2) Apply your changes. Be sure to checkout the project's [codestyle](https://github.com/yandex/codestyle/blob/master/javascript.md)
+3) Make sure the lint and test pass:
+```
+npm run-script lint && npm run-script test
+```
+4) Send a pull request.
+
 TODO
 ===
-* README: Describe what's happening under the hood - how the root folder is selected, configuration file syntax.
-* README: how to contribute, codestyle, running lint and tests.
 * Path - module cache.
 * More tests.
 * Continuous integration.

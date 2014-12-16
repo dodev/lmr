@@ -1,16 +1,5 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-
-var CONFIG_FILE_NAME = '.lmr.json';
-
-var cwd = process.cwd();
-var defaultConfig = {
-    root: cwd,
-    aliases: []
-};
-
 /**
  * Describes a directory alias to be used in the require section
  *
@@ -26,6 +15,17 @@ var defaultConfig = {
  * @property {String} root
  * @property {AliasEntry[]} aliases
  */
+
+var fs = require('fs');
+var path = require('path');
+
+var CONFIG_FILE_NAME = '.lmr.json';
+
+var cwd = process.cwd();
+var defaultConfig = {
+    root: cwd,
+    aliases: []
+};
 
 /**
  * Looks for a config file in the fs. It starts from the startDirName and makes it's way up to the root folder.

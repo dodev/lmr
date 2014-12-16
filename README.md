@@ -95,7 +95,7 @@ var Analyzer = lmr('lib/Analyzer');
 
 The current configuration files will be available under the `config` alias:
 ```javascript
-var hostsConfig = lmr('confg/hosts');
+var hostsConfig = lmr('config/hosts');
 ```
 
 How To Contribute

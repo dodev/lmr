@@ -21,9 +21,14 @@ var path = require('path');
 
 var CONFIG_FILE_NAME = '.lmr.json';
 
-var cwd = process.cwd();
+if (!module.parent) {
+    throw new Error('Error: lmr cannot be used as entry point for your application');
+}
+
+var mainModuleFilename = module.parent.filename;
+var mainDir = path.dirname(mainModuleFilename);
 var defaultConfig = {
-    root: cwd,
+    root: mainDir,
     aliases: []
 };
 
@@ -79,7 +84,7 @@ function parseConfigFile(filePath) {
     return result;
 }
 
-var configFilePath = getConfigFilePath(cwd);
+var configFilePath = getConfigFilePath(mainDir);
 
 /**
  * Module's configuration. Built on the first run.

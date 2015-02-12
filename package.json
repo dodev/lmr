@@ -1,15 +1,28 @@
 {
   "name": "lmr",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "description": "Local Module Require (yet another one of those, but better)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dodev/lmr.git"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "jscs .; jshint-groups; exit 0",
+    "test": "cd test; mocha .; cd nested; mocha .; cd ../nested-own-config; mocha .; exit 0"
   },
   "keywords": [
+    "module",
+    "alias",
     "require",
     "local"
   ],
   "author": "Petar Dodev",
-  "license": "ISC"
+  "license": "MIT",
+  "devDependencies": {
+    "jscs": "^1.8",
+    "jshint-groups": "^0.6",
+    "mocha": "^2.0",
+    "should": "^4.3"
+  }
 }
